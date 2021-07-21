@@ -33,7 +33,9 @@ public class LivroService {
 
 	@Transactional
 	public Livro create(Livro obj) {
+		Categoria cat = categoriaService.findById(obj.getCategoria().getId());
 		obj.setId(null);
+		obj.setCategoria(cat);
 		return repository.save(obj);
 	}
 
