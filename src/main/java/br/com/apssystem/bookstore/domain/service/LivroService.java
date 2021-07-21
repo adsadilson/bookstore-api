@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.apssystem.bookstore.api.execption.ObjectEmUsoException;
 import br.com.apssystem.bookstore.api.execption.ObjectNotFoundException;
-import br.com.apssystem.bookstore.domain.dtos.LivroDTO;
+import br.com.apssystem.bookstore.domain.entity.Categoria;
 import br.com.apssystem.bookstore.domain.entity.Livro;
 import br.com.apssystem.bookstore.domain.repository.LivroRepository;
 import lombok.AllArgsConstructor;
@@ -38,9 +38,13 @@ public class LivroService {
 	}
 
 	@Transactional
-	public Livro update(LivroDTO objDTO, Long id) {
+	public Livro update(Livro newObj, Long id) {
+		Categoria cat = categoriaService.findById(newObj.getCategoria().getId());
 		Livro obj = findById(id);
-		obj.setTitulo(objDTO.getTitulo());
+		obj.setTitulo(newObj.getTitulo());
+		obj.setNomeAutor(newObj.getNomeAutor());
+		obj.setTexto(newObj.getTitulo());
+		obj.setCategoria(cat);
 		return repository.save(obj);
 	}
 	
