@@ -34,7 +34,7 @@ public class CategoriaService {
 		obj.setId(null);
 		return repository.save(obj);
 	}
-	
+
 	@Transactional
 	public Categoria update(CategoriaDTO objDTO, Long id) {
 		Categoria obj = findById(id);
@@ -42,7 +42,7 @@ public class CategoriaService {
 		obj.setDescricao(objDTO.getDescricao());
 		return repository.save(obj);
 	}
-	
+
 	public void delete(Long id) {
 		findById(id);
 		try {
@@ -51,4 +51,5 @@ public class CategoriaService {
 			throw new ObjectEmUsoException("Categoria não pode ser deletada! possui livros associados");
 		}
 	}
+
 }

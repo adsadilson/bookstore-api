@@ -13,12 +13,10 @@ public class LivroDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-
 	private String titulo;
 
 	public LivroDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public LivroDTO(Livro obj) {

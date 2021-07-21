@@ -40,6 +40,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok(list);
 	}
 
+
 	@PostMapping
 	public ResponseEntity<Categoria> create(@RequestBody Categoria obj) {
 		obj = service.create(obj);
