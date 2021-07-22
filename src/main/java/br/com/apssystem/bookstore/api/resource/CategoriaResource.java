@@ -2,7 +2,6 @@ package br.com.apssystem.bookstore.api.resource;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.apssystem.bookstore.domain.dtos.CategoriaDTO;
+import br.com.apssystem.bookstore.api.dtos.entity.CategoriaEntity;
+import br.com.apssystem.bookstore.api.dtos.input.CategoriaInput;
+import br.com.apssystem.bookstore.api.dtos.mapper.CategoriaMapper;
 import br.com.apssystem.bookstore.domain.entity.Categoria;
 import br.com.apssystem.bookstore.domain.service.CategoriaService;
 import lombok.AllArgsConstructor;
@@ -27,38 +28,38 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CategoriaResource {
 
-	private CategoriaService service;
+	private CategoriaService categoriaService;
+	private CategoriaMapper mapper;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-		Categoria obj = service.findById(id);
-		return ResponseEntity.ok(obj);
+	public ResponseEntity<CategoriaEntity> buscarPorId(@PathVariable Long id) {
+		Categoria obj = categoriaService.buscarPorId(id);
+		return ResponseEntity.ok(mapper.toEntity(obj));
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<CategoriaDTO> list = service.findAll().stream().map(obj -> new CategoriaDTO(obj))
-				.collect(Collectors.toList());
-		return ResponseEntity.ok(list);
+	public ResponseEntity<List<CategoriaEntity>> listarTodos() {
+		List<CategoriaEntity> lists = mapper.toCollectionEntity(categoriaService.listarTodos());
+		return ResponseEntity.ok(lists);
 	}
 
-
 	@PostMapping
-	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj) {
-		obj = service.create(obj);
+	public ResponseEntity<Categoria> adicionar(@Valid @RequestBody Categoria obj) {
+		obj = categoriaService.adicionar(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaDTO> update(@RequestBody CategoriaDTO objDTO, @PathVariable Long id) {
-		Categoria newObj = service.update(objDTO, id);
-		return ResponseEntity.ok().body(new CategoriaDTO(newObj));
+	public ResponseEntity<CategoriaEntity> atualizar(@RequestBody CategoriaInput input, @PathVariable Long id) {
+		Categoria obj = categoriaService.buscarPorId(id);
+		mapper.copyToDomainObject(input, obj);
+		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		categoriaService.excluir(id);
 		return ResponseEntity.noContent().build();
 	}
 }

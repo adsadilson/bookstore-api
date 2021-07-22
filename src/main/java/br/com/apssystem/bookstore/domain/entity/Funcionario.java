@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -31,15 +32,19 @@ public class Funcionario {
 	@Column(nullable = false, length = 50)
 	@Size(min = 4, max = 50)
 	private String nome;
-	
+
+	@Column(nullable = false, unique = true, length = 100)
+	@Email
+	private String email;
+
 	@Column(length = 50)
 	@Size(min = 4, max = 50)
 	private String login;
-	
+
 	@Column(length = 100)
 	@Size(min = 6, max = 10)
 	private String senha;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "perfil_id")
 	private Perfil perfil;

@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.com.apssystem.bookstore.api.execption.ObjectEmUsoException;
-import br.com.apssystem.bookstore.api.execption.ObjectNotFoundException;
-import br.com.apssystem.bookstore.domain.dtos.CategoriaDTO;
+import br.com.apssystem.bookstore.api.execption.EntidadeEmUsoException;
+import br.com.apssystem.bookstore.api.execption.EntidadeNaoEncontradaException;
+import br.com.apssystem.bookstore.api.execption.NegocioException;
 import br.com.apssystem.bookstore.domain.entity.Categoria;
 import br.com.apssystem.bookstore.domain.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
@@ -18,37 +18,42 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CategoriaService {
 
-	private CategoriaRepository repository;
+	private CategoriaRepository categoriaRespository;
 
-	public Categoria findById(Long id) {
-		return repository.findById(id)
-				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada para esse [ID: " + id + "]"));
+	public Categoria buscarPorId(Long id) {
+		return categoriaRespository.findById(id).orElseThrow(
+				() -> new EntidadeNaoEncontradaException("Categoria não encontrada para esse [ID: " + id + "]"));
 	}
 
-	public List<Categoria> findAll() {
-		return repository.findAll();
+	public List<Categoria> listarTodos() {
+		return categoriaRespository.findAll();
 	}
 
 	@Transactional
-	public Categoria create(Categoria obj) {
+	public Categoria adicionar(Categoria obj) {
 		obj.setId(null);
-		return repository.save(obj);
+		return categoriaRespository.save(obj);
 	}
 
 	@Transactional
-	public Categoria update(CategoriaDTO objDTO, Long id) {
-		Categoria obj = findById(id);
-		obj.setNome(objDTO.getNome());
-		obj.setDescricao(objDTO.getDescricao());
-		return repository.save(obj);
+	public Categoria atualizar(Categoria obj) {
+		return categoriaRespository.save(obj);
 	}
 
-	public void delete(Long id) {
-		findById(id);
+	public void excluir(Long id) {
+		buscarPorId(id);
 		try {
-			repository.deleteById(id);
+			categoriaRespository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new ObjectEmUsoException("Categoria não pode ser deletada! possui livros associados");
+			throw new EntidadeEmUsoException("Categoria não pode ser deletada! possui livros associados");
+		}
+	}
+
+	public void categoriaExistente(Categoria obj) {
+		boolean result = categoriaRespository.findById(obj.getId()).stream()
+				.anyMatch(cat -> !cat.getNome().equals(obj.getNome()));
+		if (result) {
+			throw new NegocioException("Categoria já cadastrada para esse [ID: " + obj.getNome() + "]");
 		}
 	}
 

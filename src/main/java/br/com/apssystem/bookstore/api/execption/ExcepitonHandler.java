@@ -18,16 +18,16 @@ import lombok.AllArgsConstructor;
 @ControllerAdvice
 public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StanderError> objectNotFoundException(ObjectNotFoundException ex, ServletRequest request) {
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<StanderError> objectNotFoundException(EntidadeNaoEncontradaException ex, ServletRequest request) {
 		StanderError error = new StanderError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
 				ex.getMessage());
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
 
-	@ExceptionHandler(ObjectEmUsoException.class)
-	public ResponseEntity<StanderError> objectEmUsoException(ObjectEmUsoException ex, ServletRequest request) {
+	@ExceptionHandler(EntidadeEmUsoException.class)
+	public ResponseEntity<StanderError> objectEmUsoException(EntidadeEmUsoException ex, ServletRequest request) {
 		StanderError error = new StanderError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
 				ex.getMessage());
 

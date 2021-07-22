@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.com.apssystem.bookstore.api.execption.ObjectEmUsoException;
-import br.com.apssystem.bookstore.api.execption.ObjectNotFoundException;
+import br.com.apssystem.bookstore.api.execption.EntidadeEmUsoException;
+import br.com.apssystem.bookstore.api.execption.EntidadeNaoEncontradaException;
 import br.com.apssystem.bookstore.domain.entity.Categoria;
 import br.com.apssystem.bookstore.domain.entity.Livro;
 import br.com.apssystem.bookstore.domain.repository.LivroRepository;
@@ -18,50 +18,43 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LivroService {
 
-	private LivroRepository repository;
+	private LivroRepository repositoryLivro;
 	private CategoriaService categoriaService;
-	
 
-	public Livro findById(Long id) {
-		return repository.findById(id)
-				.orElseThrow(() -> new ObjectNotFoundException("Livro não encontrada para esse [ID: " + id + "]"));
+	public Livro buscarPorId(Long id) {
+		return repositoryLivro.findById(id).orElseThrow(
+				() -> new EntidadeNaoEncontradaException("Livro não encontrada para esse [ID: " + id + "]"));
 	}
 
 	public List<Livro> findAll() {
-		return repository.findAll();
+		return repositoryLivro.findAll();
 	}
 
 	@Transactional
-	public Livro create(Livro obj) {
-		Categoria cat = categoriaService.findById(obj.getCategoria().getId());
+	public Livro adicionar(Livro obj) {
+		Categoria cat = categoriaService.buscarPorId(obj.getCategoria().getId());
 		obj.setId(null);
 		obj.setCategoria(cat);
-		return repository.save(obj);
+		return repositoryLivro.save(obj);
 	}
 
 	@Transactional
-	public Livro update(Livro newObj, Long id) {
-		Categoria cat = categoriaService.findById(newObj.getCategoria().getId());
-		Livro obj = findById(id);
-		obj.setTitulo(newObj.getTitulo());
-		obj.setNome(newObj.getNome());
-		obj.setTexto(newObj.getTitulo());
-		obj.setCategoria(cat);
-		return repository.save(obj);
+	public Livro autalizar(Livro obj) {
+		return repositoryLivro.save(obj);
 	}
-	
-	public void delete(Long id) {
-		findById(id);
+
+	public void excluir(Long id) {
+		buscarPorId(id);
 		try {
-			repository.deleteById(id);
+			repositoryLivro.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new ObjectEmUsoException("Livro não pode ser deletada! possui livros associados");
+			throw new EntidadeEmUsoException("Livro não pode ser deletada! possui livros associados");
 		}
 	}
 
-	public List<Livro> findAll(Long id) {
-		categoriaService.findById(id);
-		return repository.findAllByCategorai(id);
+	public List<Livro> listarTodosLivroPorCategoria(Long id) {
+		categoriaService.buscarPorId(id);
+		return repositoryLivro.findAllByCategorai(id);
 	}
 
 }

@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 public class Livro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "LIVRO_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "LIVRO_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 
