@@ -44,7 +44,7 @@ public class LivroService {
 		Categoria cat = categoriaService.findById(newObj.getCategoria().getId());
 		Livro obj = findById(id);
 		obj.setTitulo(newObj.getTitulo());
-		obj.setNomeAutor(newObj.getNomeAutor());
+		obj.setNome(newObj.getNome());
 		obj.setTexto(newObj.getTitulo());
 		obj.setCategoria(cat);
 		return repository.save(obj);

@@ -1,6 +1,5 @@
 package br.com.apssystem.bookstore.domain.entity;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,14 +30,18 @@ public class Livro {
 	@Column(length = 100, nullable = false)
 	private String titulo;
 
-	@Column(name = "nome_autor", length = 100)
-	private String nomeAutor;
-	
+	@Column(name = "nome", length = 100, nullable = false)
+	private String nome;
+
 	@Column(name = "texto")
 	private String texto;
-	
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
+
+	@ManyToOne
+	@JoinColumn(name = "editora_id", nullable = false)
+	private Editora editora;
 }
