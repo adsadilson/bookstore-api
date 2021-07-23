@@ -26,15 +26,15 @@ public class DBService {
 	private EditoraRepository editoraRepository;
 
 	public void instanciaBaseDado() {
-	
-		Endereco end1 = new Endereco("Rua 2 de Junho", "713", "Centro","Salvador", "BS");
-		Editora edit1 = new Editora(null, "Rocco", "91856371000125", "71 99855-5001", end1);
 
-		Endereco end2 = new Endereco("Av 7 de Setembro", "013", "Centro","São Paulo", "SP");
-		Editora edit2 = new Editora(null, "Arqueiro", "07997042000198", "11 98850-5500", end2);
-		
-		editoraRepository.saveAll(Arrays.asList(edit1,edit2));
-		
+		Endereco end1 = new Endereco("Rua 2 de Junho", "713", "Centro", "Salvador", "BS");
+		Editora edit1 = new Editora(null, "Rocco", "91856371000125", "71 99855-5001", end1, null);
+
+		Endereco end2 = new Endereco("Av 7 de Setembro", "013", "Centro", "São Paulo", "SP");
+		Editora edit2 = new Editora(null, "Arqueiro", "07997042000198", "11 98850-5500", end2, null);
+
+		editoraRepository.saveAll(Arrays.asList(edit1, edit2));
+
 		Categoria cat1 = new Categoria();
 		cat1.setNome("Informática");
 		cat1.setDescricao("Livros de Informática");

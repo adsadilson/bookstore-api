@@ -13,8 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -22,6 +24,8 @@ import lombok.Setter;
 @SequenceGenerator(name = "EDITORA_ID", sequenceName = "EDITORA_ID_SEQ")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = false)
 public class Editora {
 
@@ -44,17 +48,5 @@ public class Editora {
 	@OneToMany(mappedBy = "editora")
 	private List<Livro> livros = new ArrayList<>();
 
-	public Editora(Long id, String nome, String cnpj, String fone, Endereco endereco) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cnpj = cnpj;
-		this.fone = fone;
-		this.endereco = endereco;
-	}
-
-	public Editora() {
-		super();
-	}
 
 }
