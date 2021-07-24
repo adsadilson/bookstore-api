@@ -14,7 +14,7 @@ import lombok.Data;
 public class LocatarioInput {
 
 	@NotBlank
-	@Size(min = 4)
+	@Size(min = 4, max = 100)
 	private String nome;
 
 	@NotBlank

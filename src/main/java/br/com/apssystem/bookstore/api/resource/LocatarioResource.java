@@ -44,10 +44,10 @@ public class LocatarioResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Locatario> adicionar(@Valid @RequestBody Locatario obj) {
-		obj = locatarioService.adicionar(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<LocatarioEntity> adicionar(@Valid @RequestBody LocatarioInput obj) {
+		Locatario objNovo = locatarioService.adicionar(mapper.toDomain(obj));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objNovo.getId()).toUri();
+		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
 	@PutMapping("/{id}")

@@ -160,6 +160,12 @@ public class DBService {
 		loc1.setNome("CAMILA DA SILVA"); loc1.setCpf("91178976025"); loc1.setFone("71-98800-0051"); loc1.setEndereco(end); 
 		loc1.setNascimento(LocalDate.of(1975, 10, 30)); loc1.setRg("77548054-11"); loc1.setProfissao("ADMINISTRADORA");
 		locatarioRepository.save(loc1);
+
+		end = new Endereco("RUA ELIEZER ANDRADE", "715", "CENTRO", "VITORIA DA CONQUISTA", "BA");
+		loc1 = new Locatario();
+		loc1.setNome("FERNANDA"); loc1.setCpf("97329757098"); loc1.setFone("77-343-2200"); loc1.setEndereco(end); 
+		loc1.setNascimento(LocalDate.of(1989, 7, 23)); loc1.setRg("68688115-99"); loc1.setProfissao("CABELEREIRA");
+		locatarioRepository.save(loc1);
 		
 	}
 	
