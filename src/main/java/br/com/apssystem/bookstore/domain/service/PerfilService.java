@@ -18,21 +18,21 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PerfilService {
 
-	private PerfilRepository PerfilRespository;
+	private PerfilRepository perfilRespository;
 
 	public Perfil buscarPorId(Long id) {
-		return PerfilRespository.findById(id).orElseThrow(
+		return perfilRespository.findById(id).orElseThrow(
 				() -> new EntidadeNaoEncontradaException("Perfil não encontrada para esse [ID: " + id + "]"));
 	}
 
 	public List<Perfil> listarTodos() {
-		return PerfilRespository.findAll();
+		return perfilRespository.findAll();
 	}
 
 	@Transactional
 	public Perfil adicionar(Perfil obj) {
 		PerfilExistente(obj);
-		return PerfilRespository.save(obj);
+		return perfilRespository.save(obj);
 	}
 
 	@Transactional
@@ -43,17 +43,23 @@ public class PerfilService {
 	public void excluir(Long id) {
 		buscarPorId(id);
 		try {
-			PerfilRespository.deleteById(id);
+			perfilRespository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException("Perfil não pode ser deletada! possui funcionários associados");
 		}
 	}
 
 	public void PerfilExistente(Perfil obj) {
-			boolean result = PerfilRespository.findByNome(obj.getNome()).stream().anyMatch(cat -> !cat.equals(obj));
-			if (result) {
-				throw new NegocioException("Perfil já cadastrado para esse [NOME: " + obj.getNome()+"]");
-			}
+		boolean result = perfilRespository.findByNome(obj.getNome()).stream().anyMatch(cat -> !cat.equals(obj));
+		if (result) {
+			throw new NegocioException("Perfil já cadastrado para esse [NOME: " + obj.getNome() + "]");
+		}
+	}
+
+	public Perfil buscarTodosFuncPorPerfil(Long obj) {
+		buscarPorId(obj);
+		return perfilRespository.buscarTodosOsFuncPorPerfil(obj)
+				.orElseThrow(() -> new NegocioException("Não encontrando nenhum funcionário associado a esse perfil"));
 	}
 
 }

@@ -44,10 +44,10 @@ public class FuncionarioResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Funcionario> adicionar(@Valid @RequestBody Funcionario obj) {
-		obj = funcionarioService.adicionar(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<FuncionarioEntity> adicionar(@Valid @RequestBody FuncionarioInput obj) {
+		Funcionario objNovo = funcionarioService.adicionar(mapper.toDomain(obj));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objNovo.getId()).toUri();
+		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
 	@PutMapping("/{id}")

@@ -8,22 +8,34 @@ import org.springframework.stereotype.Service;
 import br.com.apssystem.bookstore.domain.entity.Categoria;
 import br.com.apssystem.bookstore.domain.entity.Editora;
 import br.com.apssystem.bookstore.domain.entity.Endereco;
+import br.com.apssystem.bookstore.domain.entity.Funcionario;
 import br.com.apssystem.bookstore.domain.entity.Livro;
+import br.com.apssystem.bookstore.domain.entity.Perfil;
+import br.com.apssystem.bookstore.domain.enums.Status;
 import br.com.apssystem.bookstore.domain.repository.CategoriaRepository;
 import br.com.apssystem.bookstore.domain.repository.EditoraRepository;
+import br.com.apssystem.bookstore.domain.repository.FuncionarioRepository;
 import br.com.apssystem.bookstore.domain.repository.LivroRepository;
+import br.com.apssystem.bookstore.domain.repository.PerfilRepository;
 
 @Service
 public class DBService {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-
 	@Autowired
 	private LivroRepository livroRepository;
-
+	@Autowired
+	private PerfilRepository perfilRepository;
+	@Autowired
+	private FuncionarioRepository funcRepository;
 	@Autowired
 	private EditoraRepository editoraRepository;
+
+	// @formatter:off
+ 
+
+
 
 	public void instanciaBaseDado() {
 
@@ -87,5 +99,47 @@ public class DBService {
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		livroRepository.saveAll(Arrays.asList(l1, l2, l3, l4, l5));
+		
+		populaTblPerfil();
+		populaTblFuncionario();
 	}
+
+	private void populaTblPerfil() {
+		Perfil perfil1 = new Perfil();
+		perfil1.setNome("ADIMINISTRADOR");
+		perfil1.setDescricao("ACESSO SEM LIMITAÇÕES AO SISTEMA");
+		perfil1.setStatus(Status.ATIVO);
+		
+		Perfil perfil2 = new Perfil();
+		perfil2.setNome("OPERADOR DE CAIXA");
+		perfil2.setDescricao("ACESSO A FRENTE DE LOJA [PDV]");
+		perfil2.setStatus(Status.ATIVO);
+		
+		perfilRepository.saveAll(Arrays.asList(perfil1,perfil2));
+	}
+	
+	private void populaTblFuncionario() {
+		Perfil perfil1 = new Perfil();
+		perfil1.setId(1L);
+		
+		Funcionario func = new Funcionario();
+		func.setEmail("adilson@apss.com.br"); func.setNome("Adilson"); func.setLogin("ADMIN"); func.setPerfil(perfil1);
+		funcRepository.save(func);
+		
+		Perfil perfil2 = new Perfil();
+		perfil2.setId(2L);
+		
+		Funcionario func2 = new Funcionario();
+		func2.setEmail("cleick@apss.com.br"); func2.setNome("CLEICK"); func2.setLogin("SUPORTE-1"); func2.setPerfil(perfil2);
+		funcRepository.save(func2);
+		
+		Perfil perfil3 = new Perfil();
+		perfil3.setId(1L);
+		
+		Funcionario func3 = new Funcionario();
+		func3.setEmail("mr@apss.com.br"); func3.setNome("MARCELO"); func3.setLogin("MAR-N1"); func3.setPerfil(perfil3);
+		funcRepository.save(func3);
+	}
+	
+	// @formatter:on
 }

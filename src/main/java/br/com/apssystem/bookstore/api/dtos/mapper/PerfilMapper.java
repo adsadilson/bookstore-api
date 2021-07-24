@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.apssystem.bookstore.api.dtos.entity.PerfilEntity;
+import br.com.apssystem.bookstore.api.dtos.entity.PerfilFuncEntity;
 import br.com.apssystem.bookstore.api.dtos.input.PerfilInput;
 import br.com.apssystem.bookstore.domain.entity.Perfil;
 
@@ -19,6 +20,10 @@ public class PerfilMapper {
 
 	public PerfilEntity toEntity(Perfil obj) {
 		return modelMapper.map(obj, PerfilEntity.class);
+	}
+	
+	public PerfilFuncEntity toFuncEntity(Perfil obj) {
+		return modelMapper.map(obj, PerfilFuncEntity.class);
 	}
 
 	public List<PerfilEntity> toCollectionEntity(List<Perfil> objs) {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.apssystem.bookstore.api.dtos.entity.PerfilEntity;
+import br.com.apssystem.bookstore.api.dtos.entity.PerfilFuncEntity;
 import br.com.apssystem.bookstore.api.dtos.input.PerfilInput;
 import br.com.apssystem.bookstore.api.dtos.mapper.PerfilMapper;
 import br.com.apssystem.bookstore.domain.entity.Perfil;
@@ -63,5 +64,11 @@ public class PerfilResource {
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		perfilService.excluir(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/{id}/{funcionarios}")
+	public ResponseEntity<PerfilFuncEntity> buscarTodosFuncPorPerfil(@PathVariable("id") Long id) {
+		Perfil perfil = perfilService.buscarTodosFuncPorPerfil(id);
+		return ResponseEntity.ok(mapper.toFuncEntity(perfil));
 	}
 }
