@@ -10,7 +10,7 @@ import lombok.Data;
 public class PerfilInput {
 
 	@NotBlank
-	@Size(min = 4)
+	@Size(min = 3, max = 100)
 	private String nome;
 	private String descricao;
 	private Status status;

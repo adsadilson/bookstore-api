@@ -44,10 +44,10 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> adicionar(@Valid @RequestBody Categoria obj) {
-		obj = categoriaService.adicionar(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<CategoriaEntity> adicionar(@Valid @RequestBody CategoriaInput obj) {
+		Categoria objNovo = categoriaService.adicionar(mapper.toDomain(obj));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objNovo.getId()).toUri();
+		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
 	@PutMapping("/{id}")

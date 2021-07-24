@@ -44,16 +44,18 @@ public class PerfilResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Perfil> adicionar(@Valid @RequestBody Perfil obj) {
-		obj = perfilService.adicionar(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<PerfilEntity> adicionar(@Valid @RequestBody PerfilInput obj) {
+		Perfil objNovo = perfilService.adicionar(mapper.toDomain(obj));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objNovo.getId())
+				.toUri();
+		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<PerfilEntity> atualizar(@RequestBody PerfilInput input, @PathVariable Long id) {
 		Perfil obj = perfilService.buscarPorId(id);
 		mapper.copyToDomainObject(input, obj);
+		perfilService.atualizar(obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
 

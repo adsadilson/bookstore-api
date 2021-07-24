@@ -31,7 +31,6 @@ public class CategoriaService {
 
 	@Transactional
 	public Categoria adicionar(Categoria obj) {
-		obj.setId(null);
 		return categoriaRespository.save(obj);
 	}
 

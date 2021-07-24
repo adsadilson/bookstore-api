@@ -31,7 +31,6 @@ public class PerfilService {
 
 	@Transactional
 	public Perfil adicionar(Perfil obj) {
-		obj.setId(null);
 		PerfilExistente(obj);
 		return PerfilRespository.save(obj);
 	}
@@ -51,10 +50,10 @@ public class PerfilService {
 	}
 
 	public void PerfilExistente(Perfil obj) {
-		boolean result = PerfilRespository.findById(obj.getId()).stream().anyMatch(cat -> !cat.equals(obj));
-		if (result) {
-			throw new NegocioException("Perfil já cadastrada para esse [NOME]: "+obj.getNome());
-		}
+			boolean result = PerfilRespository.findByNome(obj.getNome()).stream().anyMatch(cat -> !cat.equals(obj));
+			if (result) {
+				throw new NegocioException("Perfil já cadastrado para esse [NOME: " + obj.getNome()+"]");
+			}
 	}
 
 }
