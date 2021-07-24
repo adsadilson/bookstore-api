@@ -51,9 +51,9 @@ public class EditoraService {
 	}
 
 	public void editoraExistente(Editora obj) {
-		boolean result = editoraRespository.findById(obj.getId()).stream().anyMatch(cat -> !cat.equals(obj));
+		boolean result = editoraRespository.findByCnpj(obj.getCnpj()).stream().anyMatch(cat -> !cat.equals(obj));
 		if (result) {
-			throw new NegocioException("Editora já cadastrada para esse [NOME E CNPJ ]");
+			throw new NegocioException("Editora já cadastrada para esse [CNPJ: " + obj.getCnpj() + "]");
 		}
 	}
 

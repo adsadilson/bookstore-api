@@ -49,8 +49,8 @@ public class CategoriaService {
 	}
 
 	public void categoriaExistente(Categoria obj) {
-		boolean result = categoriaRespository.findById(obj.getId()).stream()
-				.anyMatch(cat -> !cat.getNome().equals(obj.getNome()));
+		boolean result = categoriaRespository.findByNome(obj.getNome()).stream()
+				.anyMatch(cat -> !cat.equals(obj));
 		if (result) {
 			throw new NegocioException("Categoria já cadastrada para esse [ID: " + obj.getNome() + "]");
 		}

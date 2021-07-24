@@ -31,8 +31,7 @@ public class LocatarioService {
 
 	@Transactional
 	public Locatario adicionar(Locatario obj) {
-		obj.setId(null);
-		editoraExistente(obj);
+		locatarioExistente(obj);
 		return locatarioRespository.save(obj);
 	}
 
@@ -50,10 +49,10 @@ public class LocatarioService {
 		}
 	}
 
-	public void editoraExistente(Locatario obj) {
-		boolean result = locatarioRespository.findById(obj.getId()).stream().anyMatch(loc -> !loc.equals(obj));
+	public void locatarioExistente(Locatario obj) {
+		boolean result = locatarioRespository.findByCpf(obj.getCpf()).stream().anyMatch(loc -> !loc.equals(obj));
 		if (result) {
-			throw new NegocioException("Locatario já cadastrada para esse [NOME]: "+obj.getNome());
+			throw new NegocioException("Locatario já cadastrada para esse [CPF: "+obj.getCpf()+"]");
 		}
 	}
 
