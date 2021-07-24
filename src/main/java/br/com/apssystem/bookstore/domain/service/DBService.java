@@ -1,5 +1,6 @@
 package br.com.apssystem.bookstore.domain.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,14 @@ import br.com.apssystem.bookstore.domain.entity.Editora;
 import br.com.apssystem.bookstore.domain.entity.Endereco;
 import br.com.apssystem.bookstore.domain.entity.Funcionario;
 import br.com.apssystem.bookstore.domain.entity.Livro;
+import br.com.apssystem.bookstore.domain.entity.Locatario;
 import br.com.apssystem.bookstore.domain.entity.Perfil;
 import br.com.apssystem.bookstore.domain.enums.Status;
 import br.com.apssystem.bookstore.domain.repository.CategoriaRepository;
 import br.com.apssystem.bookstore.domain.repository.EditoraRepository;
 import br.com.apssystem.bookstore.domain.repository.FuncionarioRepository;
 import br.com.apssystem.bookstore.domain.repository.LivroRepository;
+import br.com.apssystem.bookstore.domain.repository.LocatarioRepository;
 import br.com.apssystem.bookstore.domain.repository.PerfilRepository;
 
 @Service
@@ -31,11 +34,11 @@ public class DBService {
 	private FuncionarioRepository funcRepository;
 	@Autowired
 	private EditoraRepository editoraRepository;
+	@Autowired
+	private LocatarioRepository locatarioRepository;
+
 
 	// @formatter:off
- 
-
-
 
 	public void instanciaBaseDado() {
 
@@ -102,6 +105,7 @@ public class DBService {
 		
 		populaTblPerfil();
 		populaTblFuncionario();
+		populaTblLocatario();
 	}
 
 	private void populaTblPerfil() {
@@ -139,6 +143,24 @@ public class DBService {
 		Funcionario func3 = new Funcionario();
 		func3.setEmail("mr@apss.com.br"); func3.setNome("MARCELO"); func3.setLogin("MAR-N1"); func3.setPerfil(perfil3);
 		funcRepository.save(func3);
+	}
+	
+	
+	private void populaTblLocatario() {
+		Locatario loc1; Endereco end;
+		
+		end = new Endereco("RUA 7 DE SETEMBRO", "45", "CENTRO", "SALVADOR", "BA");
+		loc1 = new Locatario();
+		loc1.setNome("RONALDO DE OLIVEIRA"); loc1.setCpf("08823093074"); loc1.setFone("77-98859-0001"); loc1.setEndereco(end); 
+		loc1.setNascimento(LocalDate.of(1982, 9, 11)); loc1.setRg("884569-11"); loc1.setProfissao("Motorista");
+		locatarioRepository.save(loc1);
+
+		end = new Endereco("AV SÃO PEDRO", "145", "PRIMAVERA", "SALVADOR", "BA");
+		loc1 = new Locatario();
+		loc1.setNome("CAMILA DA SILVA"); loc1.setCpf("91178976025"); loc1.setFone("71-98800-0051"); loc1.setEndereco(end); 
+		loc1.setNascimento(LocalDate.of(1975, 10, 30)); loc1.setRg("77548054-11"); loc1.setProfissao("ADMINISTRADORA");
+		locatarioRepository.save(loc1);
+		
 	}
 	
 	// @formatter:on
