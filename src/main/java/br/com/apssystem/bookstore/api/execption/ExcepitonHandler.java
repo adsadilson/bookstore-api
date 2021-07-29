@@ -22,6 +22,8 @@ import lombok.AllArgsConstructor;
 public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 
 	private MessageSource messageSource;
+	
+	
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<StanderError> objectNotFoundException(EntidadeNaoEncontradaException ex,
