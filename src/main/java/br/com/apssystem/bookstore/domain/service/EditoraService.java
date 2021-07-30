@@ -31,7 +31,6 @@ public class EditoraService {
 
 	@Transactional
 	public Editora adicionar(Editora obj) {
-		obj.setId(null);
 		editoraExistente(obj);
 		return editoraRespository.save(obj);
 	}
@@ -51,7 +50,8 @@ public class EditoraService {
 	}
 
 	public void editoraExistente(Editora obj) {
-		boolean result = editoraRespository.findByCnpj(obj.getCnpj()).stream().anyMatch(cat -> !cat.equals(obj));
+		boolean result = editoraRespository.findByCnpjAndNome(obj.getNome(), obj.getCnpj()).stream()
+				.anyMatch(cat -> !cat.equals(obj));
 		if (result) {
 			throw new NegocioException("Editora já cadastrada para esse [CNPJ: " + obj.getCnpj() + "]");
 		}

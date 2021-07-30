@@ -46,10 +46,11 @@ public class EditoraResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Editora> adicionar(@Valid @RequestBody Editora obj) {
-		obj = editoraService.adicionar(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<EditoraEntity> adicionar(@Valid @RequestBody EditoraInput obj) {
+		Editora objSalva = editoraService.adicionar(mapper.toDomain(obj));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objSalva.getId())
+				.toUri();
+		return ResponseEntity.created(uri).body(mapper.toEntity(objSalva));
 	}
 
 	@PutMapping("/{id}")

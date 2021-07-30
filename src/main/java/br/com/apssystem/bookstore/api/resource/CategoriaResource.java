@@ -56,6 +56,7 @@ public class CategoriaResource {
 	public ResponseEntity<CategoriaEntity> atualizar(@RequestBody CategoriaInput input, @PathVariable Long id) {
 		Categoria obj = categoriaService.buscarPorId(id);
 		mapper.copyToDomainObject(input, obj);
+		categoriaService.atualizar(obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
 

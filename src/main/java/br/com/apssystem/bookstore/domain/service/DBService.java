@@ -37,18 +37,28 @@ public class DBService {
 	@Autowired
 	private LocatarioRepository locatarioRepository;
 
-
 	// @formatter:off
 
 	public void instanciaBaseDado() {
 
+		populaTblPerfil();
+		populaTblFuncionario();
+		populaTblLocatario();
+		populaEditoras();
+	}
+	
+	private void populaEditoras() {
+	
 		Endereco end1 = new Endereco("Rua 2 de Junho", "713", "Centro", "Salvador", "BS");
 		Editora edit1 = new Editora(null, "Rocco", "91856371000125", "71 99855-5001", end1, null);
 
 		Endereco end2 = new Endereco("Av 7 de Setembro", "013", "Centro", "São Paulo", "SP");
 		Editora edit2 = new Editora(null, "Arqueiro", "07997042000198", "11 98850-5500", end2, null);
+		
+		Endereco end3 = new Endereco("Rua Barrão do Rio Branco", "413", "Centro", "São Paulo", "SP");
+		Editora edit3 = new Editora(null, "Editora Arqueiro", "83.336.724/0001-38", "11 90050-5599", end3, null);
 
-		editoraRepository.saveAll(Arrays.asList(edit1, edit2));
+		editoraRepository.saveAll(Arrays.asList(edit1, edit2, edit3));
 
 		Categoria cat1 = new Categoria();
 		cat1.setNome("Informática");
@@ -102,10 +112,6 @@ public class DBService {
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		livroRepository.saveAll(Arrays.asList(l1, l2, l3, l4, l5));
-		
-		populaTblPerfil();
-		populaTblFuncionario();
-		populaTblLocatario();
 	}
 
 	private void populaTblPerfil() {

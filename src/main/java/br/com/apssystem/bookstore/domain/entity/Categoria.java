@@ -11,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,12 +28,10 @@ public class Categoria {
 	@EqualsAndHashCode.Include
 	private Long id;
 
-	@NotBlank(message = "Campo nome é obrigátorio!")
-	@Size(min = 3, max = 100, message = "O campo Nome deve ter 3 entre 100 caracters!")
 	@Column(length = 100, nullable = false, unique = true)
 	private String nome;
 
-	@Column(length = 150)
+	@Column(length = 255)
 	private String descricao;
 	
 	@NotNull
