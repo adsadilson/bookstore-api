@@ -3,6 +3,7 @@ package br.com.apssystem.bookstore.api.dtos.input;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -12,6 +13,9 @@ import lombok.Data;
 
 @Data
 public class LocatarioInput {
+	
+	@NotNull
+	private Long id;
 
 	@NotBlank
 	@Size(min = 4, max = 100)

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,6 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/locatarios")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class LocatarioResource {
 
 	private LocatarioService locatarioService;
@@ -53,8 +51,8 @@ public class LocatarioResource {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<LocatarioEntity> atualizar(@RequestBody LocatarioInput input, @PathVariable Long id) {
-		Locatario obj = locatarioService.buscarPorId(id);
+	public ResponseEntity<LocatarioEntity> atualizar(@RequestBody LocatarioInput input) {
+		Locatario obj = locatarioService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}

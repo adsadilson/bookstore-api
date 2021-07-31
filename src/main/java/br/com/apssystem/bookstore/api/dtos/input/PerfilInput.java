@@ -9,6 +9,9 @@ import lombok.Data;
 
 @Data
 public class PerfilInput {
+	
+	@NotNull
+	private Long id;
 
 	@NotBlank
 	@Size(min = 3, max = 100)
