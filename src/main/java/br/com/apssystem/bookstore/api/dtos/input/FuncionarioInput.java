@@ -12,7 +12,6 @@ import lombok.Data;
 @Data
 public class FuncionarioInput {
 	
-	@NotNull
 	private Long id;
 
 	@NotBlank

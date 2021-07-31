@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class PerfilInput {
 	
-	@NotNull
 	private Long id;
 
 	@NotBlank
