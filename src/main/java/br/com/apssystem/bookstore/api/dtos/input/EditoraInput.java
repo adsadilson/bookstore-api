@@ -12,6 +12,9 @@ import lombok.Data;
 
 @Data
 public class EditoraInput {
+	
+	@NotNull
+	private Long id;
 
 	@CNPJ
 	@NotNull

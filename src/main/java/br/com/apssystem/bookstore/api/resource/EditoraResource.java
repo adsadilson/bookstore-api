@@ -53,9 +53,9 @@ public class EditoraResource {
 		return ResponseEntity.created(uri).body(mapper.toEntity(objSalva));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<EditoraEntity> atualizar(@RequestBody EditoraInput input, @PathVariable Long id) {
-		Editora obj = editoraService.buscarPorId(id);
+	@PutMapping
+	public ResponseEntity<EditoraEntity> atualizar(@RequestBody EditoraInput input) {
+		Editora obj = editoraService.buscarPorId(input.geti);
 		mapper.copyToDomainObject(input, obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
