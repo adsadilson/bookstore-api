@@ -52,7 +52,7 @@ public class PerfilResource {
 		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping
 	public ResponseEntity<PerfilEntity> atualizar(@RequestBody PerfilInput input) {
 		Perfil obj = perfilService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);

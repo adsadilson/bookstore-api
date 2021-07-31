@@ -44,7 +44,7 @@ public class LivroResource {
 		return ResponseEntity.ok().body(listEntity);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping
 	public ResponseEntity<LivroEntity> atualizar(@RequestBody LivroInput input) {
 		Livro entity = livroService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, entity);

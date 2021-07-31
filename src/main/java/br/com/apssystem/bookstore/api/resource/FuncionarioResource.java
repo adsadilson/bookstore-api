@@ -50,7 +50,7 @@ public class FuncionarioResource {
 		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping
 	public ResponseEntity<FuncionarioEntity> atualizar(@RequestBody FuncionarioInput input) {
 		Funcionario obj = funcionarioService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);

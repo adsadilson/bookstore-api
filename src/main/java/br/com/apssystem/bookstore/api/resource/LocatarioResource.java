@@ -50,7 +50,7 @@ public class LocatarioResource {
 		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping
 	public ResponseEntity<LocatarioEntity> atualizar(@RequestBody LocatarioInput input) {
 		Locatario obj = locatarioService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);

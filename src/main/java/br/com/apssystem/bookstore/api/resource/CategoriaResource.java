@@ -50,7 +50,7 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).body(mapper.toEntity(objNovo));
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping
 	public ResponseEntity<CategoriaEntity> atualizar(@RequestBody CategoriaInput input) {
 		Categoria obj = categoriaService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);
