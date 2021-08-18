@@ -21,8 +21,8 @@ public class CategoriaService {
 	private CategoriaRepository categoriaRespository;
 
 	public Categoria buscarPorId(Long id) {
-		return categoriaRespository.findById(id).orElseThrow(
-				() -> new EntidadeNaoEncontradaException("Categoria não encontrada para esse [ID: " + id + "]"));
+		return categoriaRespository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Categoria não encontrada para esse id: " + id));
 	}
 
 	public List<Categoria> listarTodos() {
@@ -35,9 +35,8 @@ public class CategoriaService {
 		return categoriaRespository.save(obj);
 	}
 
-	@Transactional
 	public Categoria atualizar(Categoria obj) {
-		return categoriaRespository.save(obj);
+		return adicionar(obj);
 	}
 
 	public void excluir(Long id) {
@@ -50,10 +49,9 @@ public class CategoriaService {
 	}
 
 	public void categoriaExistente(Categoria obj) {
-		boolean result = categoriaRespository.findByNome(obj.getNome()).stream()
-				.anyMatch(cat -> !cat.equals(obj));
+		boolean result = categoriaRespository.findByNome(obj.getNome()).stream().anyMatch(cat -> !cat.equals(obj));
 		if (result) {
-			throw new NegocioException("Categoria já cadastrada para esse [ID: " + obj.getNome() + "]");
+			throw new NegocioException("Categoria já cadastrada para esse Nome: " + obj.getNome());
 		}
 	}
 

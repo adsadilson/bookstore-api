@@ -54,6 +54,7 @@ public class FuncionarioResource {
 	public ResponseEntity<FuncionarioEntity> atualizar(@RequestBody FuncionarioInput input) {
 		Funcionario obj = funcionarioService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);
+		funcionarioService.atualizar(obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
 

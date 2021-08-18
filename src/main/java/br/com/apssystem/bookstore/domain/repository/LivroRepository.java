@@ -9,10 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import br.com.apssystem.bookstore.domain.entity.Livro;
 
+
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Long> {
 
 	@Query("select obj from Livro obj where obj.categoria.id = :categoria_id order by titulo")
-	List<Livro> findAllByCategorai(@Param(value = "categoria_id") Long id);
+	List<Livro> findAllByCategoria(@Param(value = "categoria_id") Long id);
+
+	@Query("select obj from Livro obj where obj.editora.id = :editora_id order by titulo")
+	List<Livro> findAllByEditora(@Param(value = "editora_id") Long id);
 
 }

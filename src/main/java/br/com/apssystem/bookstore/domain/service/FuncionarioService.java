@@ -31,19 +31,17 @@ public class FuncionarioService {
 	}
 
 	public void funcionarioExistente(Funcionario obj) {
-		boolean result = funcionarioRepository.findByEmail(obj.getEmail()).stream()
-				.anyMatch(func -> !func.equals(obj));
+		boolean result = funcionarioRepository.findByEmail(obj.getEmail()).stream().anyMatch(func -> !func.equals(obj));
 		if (result)
-			throw new NegocioException("Funcionário já cadastrado para esse [EMAIL: " + obj.getEmail() + "]");
+			throw new NegocioException("Funcionário já cadastrado para esse EMAIL: " + obj.getEmail());
 	}
-	
+
 	@Transactional
 	public Funcionario adicionar(Funcionario obj) {
 		funcionarioExistente(obj);
 		return funcionarioRepository.save(obj);
 	}
 
-	@Transactional
 	public Funcionario atualizar(Funcionario obj) {
 		return adicionar(obj);
 	}

@@ -20,6 +20,7 @@ public class LivroService {
 
 	private LivroRepository repositoryLivro;
 	private CategoriaService categoriaService;
+	private EditoraService editoraService;
 
 	public Livro buscarPorId(Long id) {
 		return repositoryLivro.findById(id).orElseThrow(
@@ -33,7 +34,6 @@ public class LivroService {
 	@Transactional
 	public Livro adicionar(Livro obj) {
 		Categoria cat = categoriaService.buscarPorId(obj.getCategoria().getId());
-		obj.setId(null);
 		obj.setCategoria(cat);
 		return repositoryLivro.save(obj);
 	}
@@ -48,13 +48,18 @@ public class LivroService {
 		try {
 			repositoryLivro.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException("Livro não pode ser deletada! possui livros associados");
+			throw new EntidadeEmUsoException("Livro não pode ser deletada! possui associação com outras tabelas");
 		}
 	}
 
 	public List<Livro> listarTodosLivroPorCategoria(Long id) {
 		categoriaService.buscarPorId(id);
-		return repositoryLivro.findAllByCategorai(id);
+		return repositoryLivro.findAllByCategoria(id);
+	}
+	
+	public List<Livro> listarTodosLivroPorEditora(Long id) {
+		editoraService.buscarPorId(id);
+		return repositoryLivro.findAllByEditora(id);
 	}
 
 }

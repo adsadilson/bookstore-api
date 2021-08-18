@@ -21,8 +21,8 @@ public class EditoraService {
 	private EditoraRepository editoraRespository;
 
 	public Editora buscarPorId(Long id) {
-		return editoraRespository.findById(id).orElseThrow(
-				() -> new EntidadeNaoEncontradaException("Editora não encontrada para esse [ID: " + id + "]"));
+		return editoraRespository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Editora não encontrada para esse ID: " + id));
 	}
 
 	public List<Editora> listarTodos() {
@@ -35,7 +35,6 @@ public class EditoraService {
 		return editoraRespository.save(obj);
 	}
 
-	@Transactional
 	public Editora atualizar(Editora obj) {
 		return adicionar(obj);
 	}
@@ -53,7 +52,7 @@ public class EditoraService {
 		boolean result = editoraRespository.findByCnpjAndNome(obj.getNome(), obj.getCnpj()).stream()
 				.anyMatch(cat -> !cat.equals(obj));
 		if (result) {
-			throw new NegocioException("Editora já cadastrada para esse [CNPJ: " + obj.getCnpj() + "]");
+			throw new NegocioException("Editora já cadastrada para esse CNPJ: " + obj.getCnpj());
 		}
 	}
 

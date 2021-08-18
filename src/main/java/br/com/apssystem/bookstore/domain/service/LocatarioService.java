@@ -22,7 +22,7 @@ public class LocatarioService {
 
 	public Locatario buscarPorId(Long id) {
 		return locatarioRespository.findById(id).orElseThrow(
-				() -> new EntidadeNaoEncontradaException("Locatario não encontrada para esse [ID: " + id + "]"));
+				() -> new EntidadeNaoEncontradaException("Locatario não encontrada para esse ID: " + id ));
 	}
 
 	public List<Locatario> listarTodos() {
@@ -35,7 +35,6 @@ public class LocatarioService {
 		return locatarioRespository.save(obj);
 	}
 
-	@Transactional
 	public Locatario atualizar(Locatario obj) {
 		return adicionar(obj);
 	}
@@ -45,14 +44,14 @@ public class LocatarioService {
 		try {
 			locatarioRespository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException("Locatario não pode ser deletada! possui locações associados");
+			throw new EntidadeEmUsoException("Locatario não pode ser deletada! possui associações com outras tabelas");
 		}
 	}
 
 	public void locatarioExistente(Locatario obj) {
 		boolean result = locatarioRespository.findByCpf(obj.getCpf()).stream().anyMatch(loc -> !loc.equals(obj));
 		if (result) {
-			throw new NegocioException("Locatario já cadastrada para esse [CPF: "+obj.getCpf()+"]");
+			throw new NegocioException("Locatario já cadastrada para esse CPF: " + obj.getCpf());
 		}
 	}
 

@@ -55,6 +55,7 @@ public class EditoraResource {
 	public ResponseEntity<EditoraEntity> atualizar(@RequestBody EditoraInput input) {
 		Editora obj = editoraService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);
+		editoraService.atualizar(obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
 

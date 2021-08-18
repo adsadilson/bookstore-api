@@ -54,6 +54,7 @@ public class LocatarioResource {
 	public ResponseEntity<LocatarioEntity> atualizar(@RequestBody LocatarioInput input) {
 		Locatario obj = locatarioService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, obj);
+		locatarioService.atualizar(obj);
 		return ResponseEntity.ok().body(mapper.toEntity(obj));
 	}
 
